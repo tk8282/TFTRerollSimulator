@@ -30,7 +30,7 @@ public class ShopApp {
         frame.setLayout(null);  // Using null layout for manual component placement
 
         // Create a JButton with the refresh icon
-        ImageIcon refreshIcon = new ImageIcon("Assets/RefreshButton.png");
+        ImageIcon refreshIcon = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\RefreshButton.png");
         refreshButton = new JButton(refreshIcon);
         refreshButton.setBounds(50, 750, refreshIcon.getIconWidth(), refreshIcon.getIconHeight());
         frame.add(refreshButton);
@@ -39,7 +39,7 @@ public class ShopApp {
         // Adjust positions and sizes based on image dimensions
 
         // Level Up icon
-        ImageIcon levelUpImage = new ImageIcon("Assets/LevelUp.png");
+        ImageIcon levelUpImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\LevelUp.png");
         levelUp = new JLabel(levelUpImage);
         levelUp.setBounds(50, 670, levelUpImage.getIconWidth(), levelUpImage.getIconHeight());
         frame.add(levelUp);
@@ -48,47 +48,47 @@ public class ShopApp {
         int numberOfPlaceholders = 5;
         int spacing = 8;
         for (int i = 0; i < numberOfPlaceholders; i++) {
-            unitPlaceholder = new JLabel(new ImageIcon("Assets/UnitPlaceholder.png"));
+            unitPlaceholder = new JLabel(new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\UnitPlaceholder.png"));
             int xOffset = i * (unitPlaceholder.getIcon().getIconWidth() + spacing);
-            unitPlaceholder.setBounds(255 + xOffset, 670, unitPlaceholder.getIcon().getIconWidth(), unitPlaceholder.getIcon().getIconHeight());
+            unitPlaceholder.setBounds(270 + xOffset, 675, unitPlaceholder.getIcon().getIconWidth(), unitPlaceholder.getIcon().getIconHeight());
             frame.add(unitPlaceholder);
         }
 
         // Gold Count icon
-        ImageIcon goldCountImage = new ImageIcon("Assets/GoldCount.png");
+        ImageIcon goldCountImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets/\\GoldCount.png");
         goldCount = new JLabel(goldCountImage);
         goldCount.setBounds(570, 608, goldCountImage.getIconWidth(), goldCountImage.getIconHeight());
         frame.add(goldCount);
 
-        // Level icon
-        ImageIcon levelImage = new ImageIcon("Assets/Level.png");
-        level = new JLabel(levelImage);
-        level.setBounds(39, 616, levelImage.getIconWidth(), levelImage.getIconHeight());
-        frame.add(level);
-
         // Streak Icon
-        ImageIcon streakIconImage = new ImageIcon("Assets/StreakIcon.png");
+        ImageIcon streakIconImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\StreakIcon.png");
         streakIcon = new JLabel(streakIconImage);
         streakIcon.setBounds(740, 615, streakIconImage.getIconWidth(), streakIconImage.getIconHeight());
         frame.add(streakIcon);
 
-        // Level Odds icon
-        ImageIcon levelOddsImage = new ImageIcon("Assets/LevelOdds.png");
-        levelOdds = new JLabel(levelOddsImage);
-        levelOdds.setBounds(200, 630, levelOddsImage.getIconWidth(), levelOddsImage.getIconHeight());
-        frame.add(levelOdds);
-
         // Lock Shop icon
-        ImageIcon lockShopImage = new ImageIcon("Assets/LockShop.png");
+        ImageIcon lockShopImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\LockShop.png");
         lockShop = new JLabel(lockShopImage);
-        lockShop.setBounds(1213, 620, lockShopImage.getIconWidth(), lockShopImage.getIconHeight());
+        lockShop.setBounds(1210, 619, lockShopImage.getIconWidth(), lockShopImage.getIconHeight());
         frame.add(lockShop);
 
         // Shop Background image
-        ImageIcon shopBackgroundImage = new ImageIcon("Assets/ShopBackground.png");
+        ImageIcon shopBackgroundImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\ShopBackground.png");
         shopBackground = new JLabel(shopBackgroundImage);
         shopBackground.setBounds(38, 660, shopBackgroundImage.getIconWidth(), shopBackgroundImage.getIconHeight());
         frame.add(shopBackground);
+
+        // Level icon
+        ImageIcon levelImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\Level.png");
+        level = new JLabel(levelImage);
+        level.setBounds(33, 610, levelImage.getIconWidth(), levelImage.getIconHeight());
+        frame.add(level);
+
+        // Level Odds icon
+        ImageIcon levelOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\LevelOdds.png");
+        levelOdds = new JLabel(levelOddsImage);
+        levelOdds.setBounds(170, 630, levelOddsImage.getIconWidth(), levelOddsImage.getIconHeight());
+        frame.add(levelOdds);
 
         // Set the frame properties
         frame.setFocusable(true);
