@@ -1,9 +1,9 @@
 package com.troy.shop;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class UnitPool {
     // Map to store unit pools for different tiers
@@ -92,24 +92,87 @@ public class UnitPool {
         unitPools.put(5, fiveCostUnits);
     }
 
+    // Method to get a random unit based upon the given tier
     public static String getRandomUnit(int tier) {
         // Retrieve the unit pool for the specified tier
         Map<String, Integer> units = unitPools.get(tier);
 
         if (units != null && !units.isEmpty()) {
-            // Randomly select a unit from the pool
-            List<String> availableUnits = new ArrayList<>(units.keySet());
-            int randomIndex = (int) (Math.random() * availableUnits.size());
-            String selectedUnit = availableUnits.get(randomIndex);
+            // Filter out units with 0 count in the pool
+            List<String> availableUnits = units.entrySet().stream()
+                    .filter(entry -> entry.getValue() > 0)
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
 
-            return selectedUnit;
-        } else {
-            // Handle the case when the pool is empty or tier is invalid
-            return "NoUnit";
+            while (!availableUnits.isEmpty()) {
+                // Randomly select a unit from the filtered pool
+                int randomIndex = (int) (Math.random() * availableUnits.size());
+                String selectedUnit = availableUnits.get(randomIndex);
+
+                return selectedUnit;
+            }
+
+            // If no available units found in the pool, attempt to find a different unit of the same tier
+            List<String> allUnits = unitPools.entrySet().stream()
+                    .filter(entry -> entry.getKey() == tier)
+                    .flatMap(entry -> entry.getValue().keySet().stream())
+                    .collect(Collectors.toList());
+
+            List<String> availableUnitsInSameTier = allUnits.stream()
+                    .filter(unit -> unitPools.get(tier).get(unit) > 0)
+                    .collect(Collectors.toList());
+
+            if (!availableUnitsInSameTier.isEmpty()) {
+                int randomIndex = (int) (Math.random() * availableUnitsInSameTier.size());
+                String selectedUnit = availableUnitsInSameTier.get(randomIndex);
+
+                // Decrement the count in the pool
+                unitPools.get(tier).put(selectedUnit, unitPools.get(tier).get(selectedUnit) - 1);
+
+                return selectedUnit;
+            }
+        }
+
+        // Handle the case when all units are depleted or tier is invalid
+        return "NoUnit";
+    }
+
+    // Check if the unit pool contains the specified unit for the given tier
+    public static boolean containsUnit(int tier, String unit) {
+        Map<String, Integer> units = unitPools.get(tier);
+        return units != null && units.containsKey(unit) && units.get(unit) > 0;
+    }
+
+
+    // Method to remove the unit that is bought
+    public static void removeUnit(int tier, String unit) {
+        // Subtract one from the unit count in the pool
+        Map<String, Integer> units = unitPools.get(tier);
+        if (units != null && units.containsKey(unit)) {
+            int count = units.get(unit);
+            if (count > 0) {
+                units.put(unit, count - 1);
+            } else {
+                // Handle the case where the count becomes negative
+                System.out.println("Error: Attempted to remove more units than available for " + unit);
+            }
         }
     }
 
-    // Additional methods for manipulating the unit pool if needed
-    public static void removeUnit(int cost, String unit) {
+    // New method to get the remaining count of a unit in a specific tier
+    public static int getRemainingCount(int tier, String unit) {
+        // Retrieve the unit pool for the specified tier
+        Map<String, Integer> units = unitPools.get(tier);
+
+        if (units != null && units.containsKey(unit)) {
+            // Return the remaining count of the unit
+            return units.get(unit);
+        } else {
+            // Handle the case when the pool is empty or tier is invalid
+            return 0;
+        }
     }
+
+
+
 }

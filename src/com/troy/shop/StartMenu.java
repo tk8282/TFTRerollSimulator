@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// StartMenu class extending JFrame for the initial configuration menu
 public class StartMenu extends JFrame {
 
     private JRadioButton unlimitedModeButton;
@@ -22,18 +23,21 @@ public class StartMenu extends JFrame {
 
     // Method to initialize and set up StartMenu components
     private void initComponents() {
+        // Radio buttons for game modes
         unlimitedModeButton = new JRadioButton("Unlimited Mode");
         timedModeButton = new JRadioButton("Timed Mode");
 
+        // Button group to manage radio button selection exclusivity
         modeGroup = new ButtonGroup();
         modeGroup.add(unlimitedModeButton);
         modeGroup.add(timedModeButton);
 
+        // Labels for mode and level selection
         JLabel modeLabel = new JLabel("Select Mode:");
-        createLevelButtons();
-
+        createLevelButtons(); // Initialize level selection radio buttons
         JLabel levelLabel = new JLabel("Select Level:");
 
+        // Start button to initiate the game
         startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
             @Override

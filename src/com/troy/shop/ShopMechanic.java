@@ -11,6 +11,8 @@ public class ShopMechanic {
     private String randomTierFileName;
     private String randomUnit;
 
+    private int randomTier;
+
     // Constructor to initialize ShopMechanic with selectedShopLevel and isUnlimitedMode
     public ShopMechanic(int selectedShopLevel, boolean isUnlimitedMode) {
         this.selectedShopLevel = selectedShopLevel;
@@ -26,7 +28,7 @@ public class ShopMechanic {
         Map<Integer, Map<Integer, Double>> levelOdds = shopMechanic.getLevelOdds();
 
         // Select a random tier based on the odds
-        int randomTier = shopMechanic.getRandomTierBasedOnOdds(levelOdds);
+        randomTier = shopMechanic.getRandomTierBasedOnOdds(levelOdds);
 
         // Convert the random tier to a corresponding file name
         randomTierFileName = shopMechanic.convertTierToFileName(randomTier);
@@ -92,7 +94,7 @@ public class ShopMechanic {
             return UnitPool.getRandomUnit(tier);
         } else {
             System.out.println("Invalid tier selected: " + tier);
-            return "NoUnit"; // Or throw an exception, log a warning, etc.
+            return "NoUnit";
         }
     }
 
@@ -104,6 +106,10 @@ public class ShopMechanic {
     // Method to retrieve the randomly selected unit's file name
     public String getRandomUnitFileName() {
         return randomUnit;
+    }
+
+    public int getTierNum() {
+        return randomTier;
     }
 
     // Method to check if a given tier is valid
