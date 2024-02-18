@@ -10,6 +10,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.Color;
+
 
 // ShopApp class extending JFrame for the main shop application
 public class ShopApp extends JFrame {
@@ -27,11 +29,27 @@ public class ShopApp extends JFrame {
     private JLabel[] tierBorders;
     private JLabel[] unitImages;
     private JLabel[] unitNameLabels;
+    private JLabel OneCostUnitOdds;
+
+    private JLabel TwoCostUnitOdds;
+
+    private JLabel ThreeCostUnitOdds;
+
+    private JLabel FourCostUnitOdds;
+
+    private JLabel FiveCostUnitOdds;
+    private JLabel oneCostOddsLabel;
+    private JLabel twoCostOddsLabel;
+    private JLabel threeCostOddsLabel;
+    private JLabel fourCostOddsLabel;
+    private JLabel fiveCostOddsLabel;
+
     private int selectedShopLevel;
     private boolean isUnlimitedMode;
     private List<String> boughtUnits;
     private List<Integer>[] unitCost;
     private int totalCostOfUnits;
+    private JLabel levelLabel;
     private UnitPool unitPool;
     private int totalCost;
     private int refreshCount;
@@ -72,9 +90,6 @@ public class ShopApp extends JFrame {
         unitNameLabels = new JLabel[5];
 
         for (int i = 0; i < 5; i++) {
-            // Set an initial empty icon for units
-            unitImages[i] = new JLabel(new ImageIcon());
-            add(unitImages[i]);
 
             // Create JLabels for unit names
             unitNameLabels[i] = new JLabel();
@@ -83,6 +98,10 @@ public class ShopApp extends JFrame {
             // Set an initial empty icon for tiers
             tierBorders[i] = new JLabel(new ImageIcon());
             add(tierBorders[i]);
+
+            // Set an initial empty icon for units
+            unitImages[i] = new JLabel(new ImageIcon());
+            add(unitImages[i]);
 
             // Declare final variable for ActionListener
             final int index = i;
@@ -140,6 +159,53 @@ public class ShopApp extends JFrame {
         lockShop.setBounds(1210, 619, lockShopImage.getIconWidth(), lockShopImage.getIconHeight());
         add(lockShop);
 
+        // One Cost odds icon
+        ImageIcon OneCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\1CostOdds.png");
+        OneCostUnitOdds = new JLabel(OneCostOddsImage);
+        OneCostUnitOdds.setBounds(260, 635, OneCostOddsImage.getIconWidth(), OneCostOddsImage.getIconHeight());
+        add(OneCostUnitOdds);
+
+        // One Cost odds icon
+        ImageIcon TwoCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\2CostOdds.png");
+        TwoCostUnitOdds = new JLabel(TwoCostOddsImage);
+        TwoCostUnitOdds.setBounds(315, 638, TwoCostOddsImage.getIconWidth(), TwoCostOddsImage.getIconHeight());
+        add(TwoCostUnitOdds);
+
+        // One Cost odds icon
+        ImageIcon ThreeCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\3CostOdds.png");
+        ThreeCostUnitOdds = new JLabel(ThreeCostOddsImage);
+        ThreeCostUnitOdds.setBounds(365, 637, ThreeCostOddsImage.getIconWidth(), ThreeCostOddsImage.getIconHeight());
+        add(ThreeCostUnitOdds);
+
+        // One Cost odds icon
+        ImageIcon FourCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\4CostOdds.png");
+        FourCostUnitOdds = new JLabel(FourCostOddsImage);
+        FourCostUnitOdds.setBounds(415, 637, FourCostOddsImage.getIconWidth(), FourCostOddsImage.getIconHeight());
+        add(FourCostUnitOdds);
+
+        // One Cost odds icon
+        ImageIcon FiveCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\5CostOdds.png");
+        FiveCostUnitOdds = new JLabel(FiveCostOddsImage);
+        FiveCostUnitOdds.setBounds(465, 636, FiveCostOddsImage.getIconWidth(), FiveCostOddsImage.getIconHeight());
+        add(FiveCostUnitOdds);
+
+        // Create JLabel for level
+        levelLabel = new JLabel("Level: " + selectedShopLevel);
+        levelLabel.setForeground(Color.WHITE);
+        levelLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        levelLabel.setBounds(90, 630, 100, 20);
+        add(levelLabel);
+
+        // Calculate and set initial odds based on user input
+        int[] odds = calculateOdds(selectedShopLevel);
+        oneCostOddsLabel = setupOddsLabel(odds[0] + "%", 280, 635, Color.WHITE);
+        twoCostOddsLabel = setupOddsLabel(odds[1] + "%", 335, 635, Color.GREEN);
+        threeCostOddsLabel = setupOddsLabel(odds[2] + "%", 385, 635, Color.BLUE);
+        fourCostOddsLabel = setupOddsLabel(odds[3] + "%", 435, 635, Color.MAGENTA); // Purple
+        fiveCostOddsLabel = setupOddsLabel(odds[4] + "%", 485, 635, Color.YELLOW);
+
+
+
         // Shop Background image
         ImageIcon shopBackgroundImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\ShopBackground.png");
         shopBackground = new JLabel(shopBackgroundImage);
@@ -192,6 +258,25 @@ public class ShopApp extends JFrame {
             }
         });
         refreshShop();
+    }
+
+    private int[] calculateOdds(int selectedShopLevel) {
+        int[] odds = new int[5];
+
+        for (int i = 0; i < 5; i++) {
+            odds[i] = (int) (LevelOdds.getLevelOdds(selectedShopLevel, i + 1) * 100);
+        }
+
+        return odds;
+    }
+
+    private JLabel setupOddsLabel(String text, int x, int y, Color color) {
+        JLabel label = new JLabel(text);
+        label.setForeground(color);
+        label.setFont(new Font("Arial", Font.BOLD, 14));
+        label.setBounds(x, y, 50, 20);
+        add(label);
+        return label;
     }
 
     // Method to handle the logic for buying a unit
