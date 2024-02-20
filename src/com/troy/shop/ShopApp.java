@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.Color;
 
-
 // ShopApp class extending JFrame for the main shop application
 public class ShopApp extends JFrame {
 
@@ -38,12 +37,17 @@ public class ShopApp extends JFrame {
     private JLabel FourCostUnitOdds;
 
     private JLabel FiveCostUnitOdds;
+    private JLabel BackgroundStage;
     private JLabel oneCostOddsLabel;
     private JLabel twoCostOddsLabel;
     private JLabel threeCostOddsLabel;
     private JLabel fourCostOddsLabel;
     private JLabel fiveCostOddsLabel;
+    private Timer timedModeTimer;
+    private int timedModeDuration = 30;  // Set the default duration for timed mode
+    private JLabel countdownLabel;
 
+    private JButton finishButton;
     private int selectedShopLevel;
     private boolean isUnlimitedMode;
     private List<String> boughtUnits;
@@ -56,6 +60,12 @@ public class ShopApp extends JFrame {
 
     // Constructor for the ShopApp class
     public ShopApp(int selectedShopLevel, boolean isUnlimitedMode) {
+
+        // Add the following check to start the countdown only in timed mode
+        if (!isUnlimitedMode) {
+            TimerClass.performCountdown(timedModeDuration, this::handleTimedModeEnd);
+        }
+
         this.selectedShopLevel = selectedShopLevel;
         this.isUnlimitedMode = isUnlimitedMode;
 
@@ -114,6 +124,19 @@ public class ShopApp extends JFrame {
                     buyUnit(index);
                 }
             });
+        }
+
+        // Add finish button for unlimited mode
+        if (isUnlimitedMode) {
+            finishButton = new JButton("Finish");
+            finishButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handleFinishButtonClick();
+                }
+            });
+            finishButton.setBounds(700, 8, 100, 50);
+            add(finishButton);
         }
 
         // Create a JButton with the refresh icon
@@ -204,8 +227,6 @@ public class ShopApp extends JFrame {
         fourCostOddsLabel = setupOddsLabel(odds[3] + "%", 435, 635, Color.MAGENTA); // Purple
         fiveCostOddsLabel = setupOddsLabel(odds[4] + "%", 485, 635, Color.YELLOW);
 
-
-
         // Shop Background image
         ImageIcon shopBackgroundImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\ShopBackground.png");
         shopBackground = new JLabel(shopBackgroundImage);
@@ -224,9 +245,34 @@ public class ShopApp extends JFrame {
         levelOdds.setBounds(170, 630, levelOddsImage.getIconWidth(), levelOddsImage.getIconHeight());
         add(levelOdds);
 
+        //Background stage
+        ImageIcon StageImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\BackgroundStage.png");
+        BackgroundStage = new JLabel(StageImage);
+        BackgroundStage.setBounds(0, 0, StageImage.getIconWidth(), StageImage.getIconHeight() +15);
+        add(BackgroundStage);
+
         // Set the frame properties
         setFocusable(true);
         setVisible(true);
+
+        // Add key listener for the "P" key (finish button) in unlimited mode
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // Not used
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // Check if the "f" key is pressed in unlimited mode
+                if (isUnlimitedMode && e.getKeyChar() == 'p') {
+                    handleFinishButtonClick();
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // Not used
+            }
+        });
 
         // Action listener for the clicking of the refresh button
         refreshButton.addActionListener(new ActionListener() {
@@ -251,15 +297,43 @@ public class ShopApp extends JFrame {
                     refreshShop();
                 }
             }
-
             @Override
             public void keyReleased(KeyEvent e) {
                 // Not used
             }
         });
+        // Call refreshShop at beginning to populate shop
         refreshShop();
     }
 
+    private void performCountdown(Runnable onFinish) {
+        if (!isUnlimitedMode) {
+            // If not in unlimited mode, do not start the countdown
+            return;
+        }
+        timedModeTimer = new Timer(1000, new ActionListener() {
+            int remainingSeconds = timedModeDuration;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (remainingSeconds > 0) {
+                    remainingSeconds--;
+                } else {
+                    // Stop the timer
+                    timedModeTimer.stop();
+                    onFinish.run();  // Execute the onFinish action
+                }
+            }
+        });
+
+        // Set the timer to stop after the specified duration
+        timedModeTimer.setInitialDelay(0); // Set to 0 to start immediately
+
+        // Start the timer
+        timedModeTimer.start();
+    }
+
+    // Method to take the SelectedShopLevel from levelOdds and convert to percentages
     private int[] calculateOdds(int selectedShopLevel) {
         int[] odds = new int[5];
 
@@ -270,6 +344,7 @@ public class ShopApp extends JFrame {
         return odds;
     }
 
+    // Method to set up and place Unit names in the game
     private JLabel setupOddsLabel(String text, int x, int y, Color color) {
         JLabel label = new JLabel(text);
         label.setForeground(color);
@@ -335,6 +410,7 @@ public class ShopApp extends JFrame {
 
     // Method to handle the logic for refreshing the shop
     private void refreshShop() {
+        refreshCount++;
         for (int i = 0; i < 5; i++) {
             shopMechanic.handleRefresh(selectedShopLevel, isUnlimitedMode);
 
@@ -389,8 +465,41 @@ public class ShopApp extends JFrame {
             System.out.println(unitImagePath);
             System.out.println("Randomly selected Unit: " + randomUnit);
 
-            refreshCount++;
             requestFocusInWindow();
         }
+    }
+
+    private void handleTimedModeEnd() {
+        // Implement actions to perform when timed mode ends
+        System.out.println("Timed Mode Ended");
+
+        // Open the results window
+        openResultsWindow();
+
+        System.out.println("Results Window Opened");
+    }
+
+
+    // Method to handle the finish button click
+    private void handleFinishButtonClick() {
+        // Stop the countdown timer if it's running
+        if (timedModeTimer != null && timedModeTimer.isRunning()) {
+            timedModeTimer.stop();
+        }
+
+        // Implement actions to perform when the finish button is clicked in unlimited mode
+        System.out.println("Finish Button Clicked");
+
+        // Open the results window
+        openResultsWindow();
+    }
+
+    // Method to open the results window
+    private void openResultsWindow() {
+        ResultsWindow resultsWindow = new ResultsWindow(boughtUnits, totalCostOfUnits, refreshCount);
+        resultsWindow.setVisible(true);
+
+        // Close the current shop window
+        dispose();
     }
 }

@@ -10,10 +10,8 @@ public class StartMenu extends JFrame {
     private JRadioButton unlimitedModeButton;
     private JRadioButton timedModeButton;
     private ButtonGroup modeGroup;
-
     private JRadioButton[] levelButtons;
     private int selectedShopLevel;
-
     private JButton startButton;
 
     // Constructor to initialize the StartMenu frame
@@ -31,6 +29,7 @@ public class StartMenu extends JFrame {
         modeGroup = new ButtonGroup();
         modeGroup.add(unlimitedModeButton);
         modeGroup.add(timedModeButton);
+
 
         // Labels for mode and level selection
         JLabel modeLabel = new JLabel("Select Mode:");
@@ -88,12 +87,18 @@ public class StartMenu extends JFrame {
         boolean isUnlimitedMode = unlimitedModeButton.isSelected();
         selectedShopLevel = getSelectedLevel();
 
+        // Check if both game mode and level are selected
+        if (!isGameModeSelected() || selectedShopLevel == -1) {
+            JOptionPane.showMessageDialog(this, "Please select both game mode and level.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;  // Do not proceed if selections are incomplete
+        }
+
         // Hide the start menu
         setVisible(false);
 
         // If timed mode is selected, initiate countdown before starting the game
         if (timedModeButton.isSelected()) {
-            performCountdown(() -> {
+            TimerClass.performCountdown(3, () -> {
                 // Countdown finished, start the game
                 SwingUtilities.invokeLater(() -> new ShopApp(selectedShopLevel, isUnlimitedMode));
             });
@@ -101,6 +106,11 @@ public class StartMenu extends JFrame {
             // Start the game immediately for other modes
             SwingUtilities.invokeLater(() -> new ShopApp(selectedShopLevel, isUnlimitedMode));
         }
+    }
+
+    // Method to check if a game mode is selected
+    private boolean isGameModeSelected() {
+        return unlimitedModeButton.isSelected() || timedModeButton.isSelected();
     }
 
     // Method to get the selected level from radio buttons
@@ -111,31 +121,6 @@ public class StartMenu extends JFrame {
             }
         }
         return -1;  // Return an invalid value if no level is selected
-    }
-
-    // Method to perform a countdown before starting the game
-    private void performCountdown(Runnable onFinish) {
-        int countdownSeconds = 3;
-
-        // Create a timer to decrement the countdown
-        Timer timer = new Timer(1000, new ActionListener() {
-            int remainingSeconds = countdownSeconds;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (remainingSeconds > 0) {
-                    System.out.println("Countdown: " + remainingSeconds);
-                    remainingSeconds--;
-                } else {
-                    // Stop the timer
-                    ((Timer) e.getSource()).stop();
-                    onFinish.run();  // Execute the onFinish action
-                }
-            }
-        });
-
-        // Start the timer
-        timer.start();
     }
 
     // Main method to launch the application
