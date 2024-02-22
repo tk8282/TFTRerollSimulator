@@ -1,5 +1,6 @@
 package com.troy.shop;
 
+// LevelOdds contains the unit odds for each level
 public class LevelOdds {
 
     // 2D array that holds the odds of each cost for each level

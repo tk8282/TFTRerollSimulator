@@ -11,52 +11,65 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Color;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.File;
 
-// ShopApp class extending JFrame for the main shop application
+
+// ShopApp class displays the visuals for the game
 public class ShopApp extends JFrame {
-
+    // Class objects
     private ShopMechanic shopMechanic;
+    private UnitPool unitPool;
+    private Timer timedModeTimer;
+
+    // Instantiate buttons displayed in the game
+    private JButton finishButton;
     private JButton refreshButton;
+
+    // Images and labels placed into the game display
     private JLabel streakIcon;
     private JLabel level;
     private JLabel goldCount;
     private JLabel levelOdds;
     private JLabel lockShop;
-    private JLabel shopBackground;
     private JLabel levelUp;
+    private JLabel levelLabel;
     private JLabel unitPlaceholder;
-    private JLabel[] tierBorders;
-    private JLabel[] unitImages;
-    private JLabel[] unitNameLabels;
-    private JLabel OneCostUnitOdds;
-
-    private JLabel TwoCostUnitOdds;
-
-    private JLabel ThreeCostUnitOdds;
-
-    private JLabel FourCostUnitOdds;
-
-    private JLabel FiveCostUnitOdds;
+    private JLabel shopBackground;
     private JLabel BackgroundStage;
+    private JLabel OneCostUnitOdds;
+    private JLabel TwoCostUnitOdds;
+    private JLabel ThreeCostUnitOdds;
+    private JLabel FourCostUnitOdds;
+    private JLabel FiveCostUnitOdds;
     private JLabel oneCostOddsLabel;
     private JLabel twoCostOddsLabel;
     private JLabel threeCostOddsLabel;
     private JLabel fourCostOddsLabel;
     private JLabel fiveCostOddsLabel;
-    private Timer timedModeTimer;
-    private int timedModeDuration = 30;  // Set the default duration for timed mode
-    private JLabel countdownLabel;
+    private JLabel[] tierBorders;
+    private JLabel[] unitImages;
+    private JLabel[] unitNameLabels;
 
-    private JButton finishButton;
-    private int selectedShopLevel;
-    private boolean isUnlimitedMode;
+    // Lists that store the information of the current units held in the shop
     private List<String> boughtUnits;
     private List<Integer>[] unitCost;
+
+    // Boolean to check what mode the user selected
+    private boolean isUnlimitedMode;
+
+    // Variables used for the results window and set "Timed" mode limit to 30 seconds
+    private int selectedShopLevel;
     private int totalCostOfUnits;
-    private JLabel levelLabel;
-    private UnitPool unitPool;
     private int totalCost;
     private int refreshCount;
+    private int timedModeDuration = 30;
 
     // Constructor for the ShopApp class
     public ShopApp(int selectedShopLevel, boolean isUnlimitedMode) {
@@ -117,7 +130,7 @@ public class ShopApp extends JFrame {
             final int index = i;
 
             // Add MouseListener to handle buy action
-            //mousePressed tested to show faster response
+            // mousePressed tested to show faster response
             unitImages[i].addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -374,7 +387,6 @@ public class ShopApp extends JFrame {
                     count++;
                     boughtUnits.remove(boughtUnit);
                     boughtUnits.add(unitName + " x" + count);
-                    System.out.println("Updated bought unit: " + boughtUnits);
                     break;
                 }
             }
@@ -382,7 +394,6 @@ public class ShopApp extends JFrame {
             if (!alreadyBought) {
                 // Add unit to the list of bought units
                 boughtUnits.add(unitName + " x1");
-                System.out.println("New bought unit: " + boughtUnits);
             }
 
             // Remove the unit from the UnitPool
@@ -391,15 +402,13 @@ public class ShopApp extends JFrame {
             // Add the unit cost from the total cost
             totalCostOfUnits += tier;
 
-            // Print relevant information after removal
-            System.out.println("Removed 1 " + unitName + " from tier " + tier + ". Remaining count: " + UnitPool.getRemainingCount(tier, unitName));
-            System.out.println("New bought unit: " + boughtUnits);
-            System.out.println("Total Cost of Units: " + totalCostOfUnits);
-
             // Hide the bought unit and related components
             unitImages[index].setVisible(false);
             tierBorders[index].setVisible(false);
             unitNameLabels[index].setVisible(false);
+
+            //play Sound effect
+            buyUnitSound();
 
             // Update the bought unit's tier in the unitCost array
             tiers.clear();
@@ -410,7 +419,13 @@ public class ShopApp extends JFrame {
 
     // Method to handle the logic for refreshing the shop
     private void refreshShop() {
+        // Add one to refresh count
         refreshCount++;
+
+        //play sound effect
+        refreshSound();
+
+        // Refresh for each slot in the shop (5)
         for (int i = 0; i < 5; i++) {
             shopMechanic.handleRefresh(selectedShopLevel, isUnlimitedMode);
 
@@ -458,19 +473,39 @@ public class ShopApp extends JFrame {
             tierBorders[i].setVisible(true);
             unitNameLabels[i].setVisible(true);
 
-            // Tests to verify the tier and champion
-            System.out.println(tierImagePath);
-            System.out.println("Randomly selected Tier: " + randomTierFileName);
-
-            System.out.println(unitImagePath);
-            System.out.println("Randomly selected Unit: " + randomUnit);
-
             requestFocusInWindow();
         }
     }
 
+    // Method that plays sound effects for refresh shop
+    private void refreshSound() {
+        playSound("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\SoundEffects\\RerollSound.wav");
+    }
+
+    // Method that plays sound effects for when a unit is bought
+    private void buyUnitSound() {
+        playSound("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\SoundEffects\\BuyUnitSound.wav");
+    }
+
+    // Method to play a sound from the specified file path
+    private void playSound(String filePath) {
+        try {
+            // Use the classloader to load the audio file
+            InputStream audioFile = getClass().getClassLoader().getResourceAsStream(filePath);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath));
+
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method that runs when Timed mode ends
     private void handleTimedModeEnd() {
-        // Implement actions to perform when timed mode ends
         System.out.println("Timed Mode Ended");
 
         // Open the results window

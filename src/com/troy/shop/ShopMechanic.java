@@ -4,13 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+// ShopMechanic used for the selection of a unit tier and random unit based on level odds used for refreshing the shop
 public class ShopMechanic {
-
     private int selectedShopLevel;
     private boolean isUnlimitedMode;
     private String randomTierFileName;
     private String randomUnit;
-
     private int randomTier;
 
     // Constructor to initialize ShopMechanic with selectedShopLevel and isUnlimitedMode
@@ -80,12 +79,6 @@ public class ShopMechanic {
         }
 
         return selectedTier;
-    }
-
-    // Method to get a random tier
-    public int getRandomTier() {
-        Map<Integer, Map<Integer, Double>> levelOdds = getLevelOdds();
-        return getRandomTierBasedOnOdds(levelOdds);
     }
 
     // Method to get a random unit for a given tier

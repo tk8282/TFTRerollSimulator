@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TimerClass for performing countdowns using Timer
+// TimerClass used to perform countdowns for the start of the game and timer for the "Timed" gamemode
 public class TimerClass {
     private static Timer timer;
 
     // Method to perform a countdown with the specified duration
-    // and execute the onFinish action when the countdown ends
+    // Executes the onFinish action when the countdown ends
     public static void performCountdown(int durationSeconds, Runnable onFinish) {
         // Stop the existing timer if running
         if (timer != null && timer.isRunning()) {

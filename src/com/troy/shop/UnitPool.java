@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+// UnitPool is used to store the information on unit names and amount of copies of each unit
 public class UnitPool {
     // Map to store unit pools for different tiers
     private static final Map<Integer, Map<String, Integer>> unitPools = new HashMap<>();

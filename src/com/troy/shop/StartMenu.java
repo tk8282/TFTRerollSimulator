@@ -4,9 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// StartMenu class extending JFrame for the initial configuration menu
+// StartMenu used for user game mode and setting selection
 public class StartMenu extends JFrame {
-
     private JRadioButton unlimitedModeButton;
     private JRadioButton timedModeButton;
     private ButtonGroup modeGroup;
@@ -23,9 +22,9 @@ public class StartMenu extends JFrame {
     private void initComponents() {
         // Radio buttons for game modes
         unlimitedModeButton = new JRadioButton("Unlimited Mode");
-        timedModeButton = new JRadioButton("Timed Mode");
+        timedModeButton = new JRadioButton("Timed Mode: 30 seconds (Will begin after 3 second countdown)");
 
-        // Button group to manage radio button selection exclusivity
+        // Button group to manage radio button selection
         modeGroup = new ButtonGroup();
         modeGroup.add(unlimitedModeButton);
         modeGroup.add(timedModeButton);
@@ -103,7 +102,7 @@ public class StartMenu extends JFrame {
                 SwingUtilities.invokeLater(() -> new ShopApp(selectedShopLevel, isUnlimitedMode));
             });
         } else {
-            // Start the game immediately for other modes
+            // Start the game immediately for unlimited
             SwingUtilities.invokeLater(() -> new ShopApp(selectedShopLevel, isUnlimitedMode));
         }
     }

@@ -1,10 +1,9 @@
 package com.troy.shop;
 
-
 import javax.swing.*;
 import java.util.List;
 
-// ResultsWindow class extending JFrame for displaying results
+// ResultsWindow for displaying results
 public class ResultsWindow extends JFrame {
 
     // Constructor for ResultsWindow
@@ -12,7 +11,7 @@ public class ResultsWindow extends JFrame {
         initComponents(boughtUnits, totalCostOfUnits, rerollCount);
     }
 
-    // Method to initialize and set up ResultsWindow components
+    // Method to initialize ResultsWindow components
     private void initComponents(List<String> boughtUnits, int totalCostOfUnits, int rerollCount) {
         // Set up the frame and layout
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,10 +32,10 @@ public class ResultsWindow extends JFrame {
         // Display total cost of units
         resultsTextArea.append("\nTotal Cost of Units: " + totalCostOfUnits +" gold \n");
 
-        // Display reroll count
+        // Display reroll count (subtract 1 since the first reroll is used to populate shop at start)
         resultsTextArea.append("\nRerolls: " + (rerollCount-1) + "\n");
 
-        // Calculate total gold spent
+        // Calculate total gold spent (Each reroll is 2 gold, -1 reroll)
         int totalGoldSpent = totalCostOfUnits + ((rerollCount-1) * 2);
 
         // Display total gold spent
