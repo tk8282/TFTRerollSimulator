@@ -153,6 +153,7 @@ public class ShopApp extends JFrame {
         }
 
         // Create a JButton with the refresh icon
+        // Ensure file path is correct
         ImageIcon refreshIcon = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\RefreshButton.png");
         refreshButton = new JButton(refreshIcon);
         refreshButton.setBounds(50, 750, refreshIcon.getIconWidth(), refreshIcon.getIconHeight());
@@ -162,6 +163,7 @@ public class ShopApp extends JFrame {
         // Adjust positions and sizes based on image dimensions
 
         // Level Up icon
+        // Ensure file path is correct
         ImageIcon levelUpImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\LevelUp.png");
         levelUp = new JLabel(levelUpImage);
         levelUp.setBounds(50, 670, levelUpImage.getIconWidth(), levelUpImage.getIconHeight());
@@ -171,6 +173,7 @@ public class ShopApp extends JFrame {
         int numberOfPlaceholders = 5;
         int spacing = 8;
         for (int x = 0; x < numberOfPlaceholders; x++) {
+            // Ensure file path is correct
             unitPlaceholder = new JLabel(new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\UnitPlaceholder.png"));
             int xOffset = x * (unitPlaceholder.getIcon().getIconWidth() + spacing);
             unitPlaceholder.setBounds(270 + xOffset, 675, unitPlaceholder.getIcon().getIconWidth(), unitPlaceholder.getIcon().getIconHeight());
@@ -178,48 +181,56 @@ public class ShopApp extends JFrame {
         }
 
         // Gold Count icon
+        // Ensure file path is correct
         ImageIcon goldCountImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets/\\GoldCount.png");
         goldCount = new JLabel(goldCountImage);
         goldCount.setBounds(570, 608, goldCountImage.getIconWidth(), goldCountImage.getIconHeight());
         add(goldCount);
 
         // Streak Icon
+        // Ensure file path is correct
         ImageIcon streakIconImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\StreakIcon.png");
         streakIcon = new JLabel(streakIconImage);
         streakIcon.setBounds(740, 615, streakIconImage.getIconWidth(), streakIconImage.getIconHeight());
         add(streakIcon);
 
         // Lock Shop icon
+        // Ensure file path is correct
         ImageIcon lockShopImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\LockShop.png");
         lockShop = new JLabel(lockShopImage);
         lockShop.setBounds(1210, 619, lockShopImage.getIconWidth(), lockShopImage.getIconHeight());
         add(lockShop);
 
         // One Cost odds icon
+        // Ensure file path is correct
         ImageIcon OneCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\1CostOdds.png");
         OneCostUnitOdds = new JLabel(OneCostOddsImage);
         OneCostUnitOdds.setBounds(260, 635, OneCostOddsImage.getIconWidth(), OneCostOddsImage.getIconHeight());
         add(OneCostUnitOdds);
 
         // One Cost odds icon
+        // Ensure file path is correct
         ImageIcon TwoCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\2CostOdds.png");
         TwoCostUnitOdds = new JLabel(TwoCostOddsImage);
         TwoCostUnitOdds.setBounds(315, 638, TwoCostOddsImage.getIconWidth(), TwoCostOddsImage.getIconHeight());
         add(TwoCostUnitOdds);
 
         // One Cost odds icon
+        // Ensure file path is correct
         ImageIcon ThreeCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\3CostOdds.png");
         ThreeCostUnitOdds = new JLabel(ThreeCostOddsImage);
         ThreeCostUnitOdds.setBounds(365, 637, ThreeCostOddsImage.getIconWidth(), ThreeCostOddsImage.getIconHeight());
         add(ThreeCostUnitOdds);
 
         // One Cost odds icon
+        // Ensure file path is correct
         ImageIcon FourCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\4CostOdds.png");
         FourCostUnitOdds = new JLabel(FourCostOddsImage);
         FourCostUnitOdds.setBounds(415, 637, FourCostOddsImage.getIconWidth(), FourCostOddsImage.getIconHeight());
         add(FourCostUnitOdds);
 
         // One Cost odds icon
+        // Ensure file path is correct
         ImageIcon FiveCostOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\5CostOdds.png");
         FiveCostUnitOdds = new JLabel(FiveCostOddsImage);
         FiveCostUnitOdds.setBounds(465, 636, FiveCostOddsImage.getIconWidth(), FiveCostOddsImage.getIconHeight());
@@ -241,24 +252,28 @@ public class ShopApp extends JFrame {
         fiveCostOddsLabel = setupOddsLabel(odds[4] + "%", 485, 635, Color.YELLOW);
 
         // Shop Background image
+        // Ensure file path is correct
         ImageIcon shopBackgroundImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\ShopBackground.png");
         shopBackground = new JLabel(shopBackgroundImage);
         shopBackground.setBounds(38, 660, shopBackgroundImage.getIconWidth(), shopBackgroundImage.getIconHeight());
         add(shopBackground);
 
         // Level icon
+        // Ensure file path is correct
         ImageIcon levelImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\Level.png");
         level = new JLabel(levelImage);
         level.setBounds(33, 610, levelImage.getIconWidth(), levelImage.getIconHeight());
         add(level);
 
         // Level Odds icon
+        // Ensure file path is correct
         ImageIcon levelOddsImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\LevelOdds.png");
         levelOdds = new JLabel(levelOddsImage);
         levelOdds.setBounds(170, 630, levelOddsImage.getIconWidth(), levelOddsImage.getIconHeight());
         add(levelOdds);
 
         //Background stage
+        // Ensure file path is correct
         ImageIcon StageImage = new ImageIcon("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\BackgroundStage.png");
         BackgroundStage = new JLabel(StageImage);
         BackgroundStage.setBounds(0, 0, StageImage.getIconWidth(), StageImage.getIconHeight() +15);
@@ -442,9 +457,7 @@ public class ShopApp extends JFrame {
                 tier = shopMechanic.getTierNum();
             } while (!UnitPool.containsUnit(tier, randomUnit) || UnitPool.getRemainingCount(tier, randomUnit) == 0);
 
-            // Example filenames:
-            // "C:\\Users\\Troy\\Pictures\\TFTShopAssets\\Tier1.png"
-            // "C:\\Users\\Troy\\Pictures\\TFTShopAssets\\Corki.png"
+            // Ensure file path is correct
             String tierImagePath = "C:\\Users\\Troy\\Pictures\\TFTShopAssets\\" + randomTierFileName + ".png";
             String unitImagePath = "C:\\Users\\Troy\\Pictures\\TFTShopAssets\\Units\\" + randomUnit + ".png";
 
@@ -479,11 +492,13 @@ public class ShopApp extends JFrame {
 
     // Method that plays sound effects for refresh shop
     private void refreshSound() {
+        // Ensure file path is correct
         playSound("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\SoundEffects\\RerollSound.wav");
     }
 
     // Method that plays sound effects for when a unit is bought
     private void buyUnitSound() {
+        // Ensure file path is correct
         playSound("C:\\Users\\Troy\\Pictures\\TFTShopAssets\\SoundEffects\\BuyUnitSound.wav");
     }
 
