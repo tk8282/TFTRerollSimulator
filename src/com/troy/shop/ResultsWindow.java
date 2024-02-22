@@ -1,6 +1,7 @@
 package com.troy.shop;
 
 import javax.swing.*;
+import java.awt.Font;
 import java.util.List;
 
 // ResultsWindow for displaying results
@@ -15,12 +16,13 @@ public class ResultsWindow extends JFrame {
     private void initComponents(List<String> boughtUnits, int totalCostOfUnits, int rerollCount) {
         // Set up the frame and layout
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setSize(800, 600);
         setLocationRelativeTo(null);
 
         // Add components to display results
         JTextArea resultsTextArea = new JTextArea();
         resultsTextArea.setEditable(false);
+        resultsTextArea.setFont(new Font("Arial", Font.PLAIN, 16));
         resultsTextArea.append("Results:\n\n");
 
         // Display bought units
@@ -30,16 +32,16 @@ public class ResultsWindow extends JFrame {
         }
 
         // Display total cost of units
-        resultsTextArea.append("\nTotal Cost of Units: " + totalCostOfUnits +" gold \n");
+        resultsTextArea.append("\nTotal Cost of Units: " + totalCostOfUnits + " gold \n");
 
         // Display reroll count (subtract 1 since the first reroll is used to populate shop at start)
-        resultsTextArea.append("\nRerolls: " + (rerollCount-1) + "\n");
+        resultsTextArea.append("\nRerolls: " + (rerollCount - 1) + "\n");
 
         // Calculate total gold spent (Each reroll is 2 gold, -1 reroll)
-        int totalGoldSpent = totalCostOfUnits + ((rerollCount-1) * 2);
+        int totalGoldSpent = totalCostOfUnits + ((rerollCount - 1) * 2);
 
         // Display total gold spent
-        resultsTextArea.append("\nTotal Gold Spent: " + totalGoldSpent +" gold \n");
+        resultsTextArea.append("\nTotal Gold Spent: " + totalGoldSpent + " gold \n");
 
         // Add resultsTextArea to the frame
         JScrollPane scrollPane = new JScrollPane(resultsTextArea);
