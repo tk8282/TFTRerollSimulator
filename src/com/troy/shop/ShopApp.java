@@ -248,7 +248,7 @@ public class ShopApp extends JFrame {
         oneCostOddsLabel = setupOddsLabel(odds[0] + "%", 280, 635, Color.WHITE);
         twoCostOddsLabel = setupOddsLabel(odds[1] + "%", 335, 635, Color.GREEN);
         threeCostOddsLabel = setupOddsLabel(odds[2] + "%", 385, 635, Color.BLUE);
-        fourCostOddsLabel = setupOddsLabel(odds[3] + "%", 435, 635, Color.MAGENTA); // Purple
+        fourCostOddsLabel = setupOddsLabel(odds[3] + "%", 435, 635, Color.MAGENTA);
         fiveCostOddsLabel = setupOddsLabel(odds[4] + "%", 485, 635, Color.YELLOW);
 
         // Shop Background image
@@ -478,8 +478,8 @@ public class ShopApp extends JFrame {
             unitImages[i].setBounds(268 + i * 205, 674, 190, 110);
 
             unitNameLabels[i].setForeground(Color.BLACK);
-            unitNameLabels[i].setFont(new Font("Arial", Font.BOLD, 20)); // Set font and size
-            unitNameLabels[i].setBounds(330 + i * 205, 790, 100, 20); // Set position and size
+            unitNameLabels[i].setFont(new Font("Arial", Font.BOLD, 16));
+            unitNameLabels[i].setBounds(330 + i * 205, 790, 100, 20);
 
             // Make the slots visible again
             unitImages[i].setVisible(true);
